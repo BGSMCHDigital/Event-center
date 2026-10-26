@@ -17,3 +17,11 @@
 **Security / behavior:** Only authenticated admin/editor roles can invoke the function; only approved events can create drafts. The function never publishes posts. Previously synced events link to their existing WordPress draft instead of creating duplicates. Existing `website_uploaded` remains a separate, manual website-published tracking control; saving a draft does not mark an event as published.
 
 **Note:** The draft post and its media are created through separate REST calls. In the event of a transient failure, already-uploaded media can remain in the WordPress media library. For production, add a durable queue/lock for concurrent clicks and implement media cleanup/retries if needed.
+
+## Target WordPress website
+
+WordPress site URL: `https://news.bgsmch.acu.edu.in`
+WordPress admin: `https://news.bgsmch.acu.edu.in/wp-admin/`
+Set the Supabase secret `WORDPRESS_SITE_URL` to `https://news.bgsmch.acu.edu.in` (without `/wp-admin/`). The admin editor URL is derived automatically from the returned post ID.
+
+WordPress REST API availability could not be confirmed externally. Verify that `/wp-json/wp/v2/posts` and `/wp-json/wp/v2/media` work for an authenticated WordPress application-password account before deployment.
